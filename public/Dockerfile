@@ -1,12 +1,13 @@
-FROM node:16 
+FROM node:16 as builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:alpine as prod-stage
-COPY --from= /app/dist/angular-app /usr/share/nginx/html
-EXPOSE 80
+FROM nginx:latest 
+WORKDIR /usr/share/nginx/html 
+RUN rm -rf ./*
+COPY --from=builder /app/build .
 CMD ["nginx", "-g", "daemon off;"]
 
