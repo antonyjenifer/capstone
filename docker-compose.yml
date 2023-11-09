@@ -1,7 +1,7 @@
 version: '3'
 services:
   react-app:
-    image: react:v1
+    image: antonyjenifer/dev:react-v1
     ports:
       - 80:80
 
